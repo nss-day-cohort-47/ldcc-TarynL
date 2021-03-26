@@ -68,6 +68,12 @@ export const getSnacks = () => {
 }
 
 export const getSingleSnack = (snackId) => {
+	
 	return fetch(`${apiURL}/snacks/${snackId}`)
+	.then(response => response.json())
+}
+
+export const getDetailsInfo =  () => {
+	return fetch (`${apiURL}/snacks?expand=snacks`)
 	.then(response => response.json())
 }
