@@ -3,12 +3,13 @@ console.log('yum, yum, yum');
 import { LoginForm } from "./auth/LoginForm.js";
 import { RegisterForm } from "./auth/RegisterForm.js";
 import { NavBar } from "./nav/NavBar.js";
+import { populateToppings, renderToppings } from "./nav/NavBar.js";
 import { SnackList } from "./snacks/SnackList.js";
 import { SnackDetails } from "./snacks/SnackDetails.js";
 import { Footer } from "./nav/Footer.js";
 import {
 	logoutUser, setLoggedInUser, loginUser, registerUser, getLoggedInUser,
-	getSnacks, getSingleSnack 
+	getSnacks, getSingleSnack, getToppings, getSnackToppings, useSnackToppingsCollection
 } from "./data/apiManager.js";
 
 
@@ -79,6 +80,13 @@ applicationElement.addEventListener("click", event => {
 	}
 })
 
+// applicationElement.addEventListener("click", event => {
+// 	event.preventDefault();
+// 	if(event.target.id === "dropdown"){
+
+// 	}
+// })
+
 const showDetails = (snackObj) => {
 	const listElement = document.querySelector("#mainContent");
 	listElement.innerHTML = SnackDetails(snackObj);
@@ -103,13 +111,24 @@ const showLoginRegister = () => {
 }
 
 const showNavBar = () => {
+	const toppingList = useSnackToppingsCollection();
+	console.log(toppingList)
+	
 	applicationElement.innerHTML += NavBar();
+	renderToppings(toppingList);
 }
 
 const showSnackList = () => {
 	getSnacks().then(allSnacks => {
 		const listElement = document.querySelector("#mainContent")
 		listElement.innerHTML = SnackList(allSnacks);
+	})
+}
+// toppings drop down 
+const showToppingsList = () => {
+	getSnackToppings().then(allToppings =>{
+		const toppingElement = document.querySelector(".toppingDropdown")
+		toppingElement.innerHTML = useSnackToppingsCollection(allToppings);
 	})
 }
 
@@ -119,11 +138,14 @@ const showFooter = () => {
 
 const startLDSnacks = () => {
 	applicationElement.innerHTML = "";
-	showNavBar();
+	showNavBar()
 	applicationElement.innerHTML += `<div id="mainContent"></div>`;
 	showSnackList();
 	showFooter();
-
+	populateToppings();
+	
 }
 
 checkForUser();
+// toppingsListener();
+// populateToppings();

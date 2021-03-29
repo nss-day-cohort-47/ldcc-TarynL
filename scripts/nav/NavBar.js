@@ -1,8 +1,52 @@
 import { getLoggedInUser } from "../data/apiManager.js"
 
+import { useSnackToppingsCollection, getSnackToppings } from "../data/apiManager.js"
+
+
+
+
+export const renderToppings = (allToppings) => {
+
+	const toppingTarget = document.querySelector(".toppingDropdown")
+
+	let toppingOptions = allToppings.map(singleTopping => {
+		return `<option value="${singleTopping.id}">${singleTopping.name}</option>`
+
+	})
+
+	toppingTarget.innerHTML = `
+		<select class = "toppingDropdown">${toppingOptions}</select>
+		
+		
+		`
+
+}
+
+export const populateToppings = () => {
+	getSnackToppings()
+		.then(() => {
+			const selectTopping = useSnackToppingsCollection()
+			renderToppings(selectTopping);
+		})
+}
+
+// export const toppingsListener = () => {
+	
+// 	applicationElement.addEventListener("change", event => {
+// 		event.preventDefault()
+// 		const toppingTarget = document.querySelector("#dropdown")
+// 		let toppings = useSnackToppingsCollection()
+// 		for (let snack of toppings){
+// 		if (event.target.value === snack.type.name ) {
+// 			showSnackList(snack);
+// 		}
+// 	}
+// }
+
+
 export const NavBar = () => {
 	//only show navItems and addTypeButton if user is logged in
-	
+
 	const navItems = getLoggedInUser().id ? `
 	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
@@ -13,12 +57,9 @@ export const NavBar = () => {
 			<button class="btn btn-info" type="button" id="allSnacks">All Snacks</button>
 		</li>
 		<li class="nav-item ms-1">
-			<select class="form-select form-select btn-info" aria-label="Select A Topping">
-				<option selected>Select A Topping</option>
-				<option value="1">One</option>
-				<option value="2">Two</option>
-				<option value="3">Three</option>
-			</select>
+			<div class ="toppingDropdown"  aria-label="Select A Topping">
+				
+			</div>
 		</li>
 		<li class="nav-item ms-1">
 			<button class="btn btn-info" type="button" id="logout">Logout</button>
