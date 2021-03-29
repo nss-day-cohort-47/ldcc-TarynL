@@ -9,7 +9,7 @@ import { SnackDetails } from "./snacks/SnackDetails.js";
 import { Footer } from "./nav/Footer.js";
 import {
 	logoutUser, setLoggedInUser, loginUser, registerUser, getLoggedInUser,
-	getSnacks, getSingleSnack, getToppings, getSnackToppings, useSnackToppingsCollection
+	getSnacks, getSingleSnack, getToppings, getSnackToppings, useSnackToppingsCollection,getSnackSelection
 } from "./data/apiManager.js";
 
 
@@ -67,8 +67,13 @@ applicationElement.addEventListener("click", event => {
 	if (event.target.id.startsWith("detailscake")) {
 		const snackId = event.target.id.split("__")[1];
 		getSingleSnack(snackId)
-			.then(response => {
-				showDetails(response);
+			.then(snackObj => {
+				getSnackToppings(snackId)
+				.then(snackToppings => {
+					snackToppings
+					showDetails(snackObj,snackToppings) ;
+				})
+				
 			})
 	}
 })
@@ -80,17 +85,64 @@ applicationElement.addEventListener("click", event => {
 	}
 })
 
-// applicationElement.addEventListener("click", event => {
-// 	event.preventDefault();
-// 	if(event.target.id === "dropdown"){
 
+
+
+// const showToppingList = (select) => {
+// 	getSnackCollection()
+// 	.then(response => {
+// 		return response;
+// 	})
+// 	.then ( () => {
+// 		const toppingArray = useSnackToppingsCollection().filter (selectedTopping => {
+// 			if (selectedTopping.name === select){
+// 				currentSnack = selectedTopping
+// 				return selectedTopping
+// 			}
+			
+// 		})
+// 		const listElement = document.querySelector("#mainContent")
+// 		listElement.innerHTML = Snacklist(toppingArray)
+// 	})
+
+// }
+applicationElement.addEventListener("change", event => {
+	
+		event.preventDefault()
+		if (event.target.id === "dropdown"){
+		let toppingValue = event.target.value
+		getSnackSelection(toppingValue)
+		
+		.then (response => {
+			let selectedToppingArray = [];
+			response.forEach(topping => {
+				selectedToppingArray.push(topping.snack)
+			})
+			const listElement = document.querySelector("#mainContent")
+		listElement.innerHTML = SnackList(selectedToppingArray)
+		})
+	}
+	})
+
+// 		let toppings = getSnackCollection()
+// 		for (let snack of toppings){
+// 		if (event.target.value === snack.type.name ) {
+// 			sSnackList(snack);
+// 		}
 // 	}
-// })
+// }
 
-const showDetails = (snackObj) => {
+
+
+
+
+
+const showDetails = (snackObj,snackToppings) => {
 	const listElement = document.querySelector("#mainContent");
-	listElement.innerHTML = SnackDetails(snackObj);
+	listElement.innerHTML = SnackDetails(snackObj, snackToppings);
 }
+
+
 //end snack listeners
 
 const checkForUser = () => {
@@ -125,12 +177,12 @@ const showSnackList = () => {
 	})
 }
 // toppings drop down 
-const showToppingsList = () => {
-	getSnackToppings().then(allToppings =>{
-		const toppingElement = document.querySelector(".toppingDropdown")
-		toppingElement.innerHTML = useSnackToppingsCollection(allToppings);
-	})
-}
+// const showToppingsList = () => {
+// 	getSnackToppings().then(allToppings =>{
+// 		const toppingElement = document.querySelector(".toppingDropdown")
+// 		toppingElement.innerHTML = useSnackToppingsCollection(allToppings);
+// 	})
+// }
 
 const showFooter = () => {
 	applicationElement.innerHTML += Footer();
