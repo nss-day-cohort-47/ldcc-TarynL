@@ -5,20 +5,20 @@ import { useSnackToppingsCollection, getSnackToppings } from "../data/apiManager
 
 
 
-export const renderToppings = (allToppings) => {
+export const renderToppings = () => {
 
-	const toppingTarget = document.querySelector(".toppingDropdown")
-
-	let toppingOptions = allToppings.map(singleTopping => {
+	// const toppingTarget = document.querySelector(".toppingDropdown")
+	const toppingList = useSnackToppingsCollection();
+	let toppingOptions = toppingList.map(singleTopping => {
 		return `<option value="${singleTopping.id}">${singleTopping.name}</option>`
 
 	})
+	return toppingOptions
 
-	toppingTarget.innerHTML = `
-		<select id ="dropdown" class = "toppingDropdown">${toppingOptions}</select>
+	// toppingTarget.innerHTML = 
+	
 		
 		
-		`
 
 }
 
@@ -47,8 +47,8 @@ export const NavBar = () => {
 			<button class="btn btn-info" type="button" id="allSnacks">All Snacks</button>
 		</li>
 		<li class="nav-item ms-1">
-			<div class ="toppingDropdown" id = "dropdown" aria-label="Select A Topping">
-				
+			<div class ="toppingDropdown" id = "toppingDropdown" aria-label="Select A Topping">
+			<select id ="dropdown"  class="toppingDropdown">${renderToppings()}</select>
 			</div>
 		</li>
 		<li class="nav-item ms-1">

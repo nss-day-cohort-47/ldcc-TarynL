@@ -3,7 +3,7 @@ console.log('yum, yum, yum');
 import { LoginForm } from "./auth/LoginForm.js";
 import { RegisterForm } from "./auth/RegisterForm.js";
 import { NavBar } from "./nav/NavBar.js";
-import { populateToppings, renderToppings } from "./nav/NavBar.js";
+import {  renderToppings } from "./nav/NavBar.js";
 import { SnackList } from "./snacks/SnackList.js";
 import { SnackDetails } from "./snacks/SnackDetails.js";
 import { Footer } from "./nav/Footer.js";
@@ -110,6 +110,7 @@ applicationElement.addEventListener("change", event => {
 	
 		event.preventDefault()
 		if (event.target.id === "dropdown"){
+			
 		let toppingValue = event.target.value
 		getSnackSelection(toppingValue)
 		
@@ -163,11 +164,9 @@ const showLoginRegister = () => {
 }
 
 const showNavBar = () => {
-	const toppingList = useSnackToppingsCollection();
-	console.log(toppingList)
 	
 	applicationElement.innerHTML += NavBar();
-	renderToppings(toppingList);
+	
 }
 
 const showSnackList = () => {
@@ -189,12 +188,16 @@ const showFooter = () => {
 }
 
 const startLDSnacks = () => {
-	applicationElement.innerHTML = "";
-	showNavBar()
-	applicationElement.innerHTML += `<div id="mainContent"></div>`;
-	showSnackList();
-	showFooter();
-	populateToppings();
+	getSnackToppings()
+	.then(() => {
+		applicationElement.innerHTML = "";
+		showNavBar();
+		applicationElement.innerHTML += `<div id="mainContent"></div>`;
+		showSnackList();
+		showFooter();
+	})
+	
+	// populateToppings();
 	
 }
 
