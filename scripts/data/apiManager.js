@@ -106,3 +106,11 @@ export const getSnackToppings = () => {
 	toppingsCollection = parsedResponse
 	return parsedResponse;
 })}
+
+export const getSnackSelection = (toppingId) => {
+	
+	return fetch (`${apiURL}/snackToppings?toppingId=${toppingId}&_expand=snack`)
+	.then(response => response.json())
+	
+	
+}

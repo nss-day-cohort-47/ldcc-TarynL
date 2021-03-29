@@ -15,7 +15,7 @@ export const renderToppings = (allToppings) => {
 	})
 
 	toppingTarget.innerHTML = `
-		<select class = "toppingDropdown">${toppingOptions}</select>
+		<select id ="dropdown" class = "toppingDropdown">${toppingOptions}</select>
 		
 		
 		`
@@ -30,18 +30,8 @@ export const populateToppings = () => {
 		})
 }
 
-// export const toppingsListener = () => {
+
 	
-// 	applicationElement.addEventListener("change", event => {
-// 		event.preventDefault()
-// 		const toppingTarget = document.querySelector("#dropdown")
-// 		let toppings = useSnackToppingsCollection()
-// 		for (let snack of toppings){
-// 		if (event.target.value === snack.type.name ) {
-// 			showSnackList(snack);
-// 		}
-// 	}
-// }
 
 
 export const NavBar = () => {
@@ -57,7 +47,7 @@ export const NavBar = () => {
 			<button class="btn btn-info" type="button" id="allSnacks">All Snacks</button>
 		</li>
 		<li class="nav-item ms-1">
-			<div class ="toppingDropdown"  aria-label="Select A Topping">
+			<div class ="toppingDropdown" id = "dropdown" aria-label="Select A Topping">
 				
 			</div>
 		</li>
