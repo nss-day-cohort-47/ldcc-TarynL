@@ -47,8 +47,9 @@ export const NavBar = () => {
 			<button class="btn btn-info" type="button" id="allSnacks">All Snacks</button>
 		</li>
 		<li class="nav-item ms-1">
-			<div class ="toppingDropdown" id = "toppingDropdown" aria-label="Select A Topping">
-			<select id ="dropdown"  class="toppingDropdown">${renderToppings()}</select>
+			<div class ="toppingDropdown btn btn-info" id = "toppingDropdown" aria-label="Select A Topping">
+		
+			<select id ="dropdown"  class="toppingDropdown btn btn-info">${renderToppings()}</select>
 			</div>
 		</li>
 		<li class="nav-item ms-1">
@@ -57,7 +58,7 @@ export const NavBar = () => {
 	</ul>
 	</div>` : ""
 
-	const addTypeButton = getLoggedInUser().id ? `
+	const addTypeButton = getLoggedInUser().admin ? `
 	<nav class="navbar navbar-light"">
 		<div class="container-fluid">
 			<button class="btn btn-outline-primary" type="button">Add A Type</button>
