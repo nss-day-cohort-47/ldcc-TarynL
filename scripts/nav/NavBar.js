@@ -5,20 +5,21 @@ import { useSnackToppingsCollection, getSnackToppings } from "../data/apiManager
 
 
 
-export const renderToppings = (allToppings) => {
+export const renderToppings = () => {
 
-	const toppingTarget = document.querySelector(".toppingDropdown")
-
-	let toppingOptions = allToppings.map(singleTopping => {
+	// const toppingTarget = document.querySelector(".toppingDropdown")
+	const toppingList = useSnackToppingsCollection();
+	let toppingOptions = toppingList.map(singleTopping => {
 		return `<option value="${singleTopping.id}">${singleTopping.name}</option>`
 
-	})
 
-	toppingTarget.innerHTML = `
-		<select id ="dropdown" class = "toppingDropdown">${toppingOptions}</select>
+	})
+	return toppingOptions.join("")
+
+	// toppingTarget.innerHTML = 
+	
 		
 		
-		`
 
 }
 
@@ -47,9 +48,13 @@ export const NavBar = () => {
 			<button class="btn btn-info" type="button" id="allSnacks">All Snacks</button>
 		</li>
 		<li class="nav-item ms-1">
-			<div class ="toppingDropdown" id = "dropdown" aria-label="Select A Topping">
-				
+		 <div class ="toppingDropdown btn btn-info" id = "toppingDropdown" aria-label="Select A Topping">
+		
+			<select id ="dropdown"  class="toppingDropdown btn btn-info"><option value=0>Select A Topping</option>${renderToppings()}</select>
 			</div>
+		</li>
+		<li class="nav-item ms-1">
+			<button class="btn btn-info" type="button" id="addTopping">Add/Edit Topping</button>
 		</li>
 		<li class="nav-item ms-1">
 			<button class="btn btn-info" type="button" id="logout">Logout</button>
@@ -57,11 +62,11 @@ export const NavBar = () => {
 	</ul>
 	</div>` : ""
 
-	const addTypeButton = getLoggedInUser().id ? `
+	const addTypeButton = getLoggedInUser().admin ? `
 	<nav class="navbar navbar-light"">
 		<div class="container-fluid">
-			<button class="btn btn-outline-primary" type="button">Add A Type</button>
-		
+			<button class="btn btn-outline-primary" id = "addTypeBtn" type="button">Add A Type</button>
+			
 		</div>
 	</nav>` : ""
 

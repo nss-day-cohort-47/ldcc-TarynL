@@ -1,4 +1,7 @@
+
+
 export const SnackCard = (snackObject) => {
+
 	return `
 	<div class="col">
 		<div class="card shadow-sm">

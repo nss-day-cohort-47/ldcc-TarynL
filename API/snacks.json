@@ -139,13 +139,11 @@
       "count": 12,
       "typeId": 6,
       "shapeId": 4,
-      "inFlavorId": 3,
+      "inFlavorId": 2,
       "seasonId": 1,
       "description": "Crispy, crunchy oatmeal puffs with an irresistible crème-flavored coating deliver a decadent experience in every spoonful.",
       "toppings": "Milk"
-
     }
-    
   ],
   "toppings": [
     {
@@ -211,6 +209,10 @@
     {
       "id": 16,
       "name": "Purple Glitter"
+    },
+    {
+      "id": 17,
+      "name": "Milk"
     }
   ],
   "snackToppings": [
@@ -411,6 +413,10 @@
     {
       "id": 5,
       "name": "Cordial"
+    },
+    {
+      "name": "Candy Bar",
+      "id": 6
     }
   ],
   "shapes": [

@@ -3,13 +3,14 @@ console.log('yum, yum, yum');
 import { LoginForm } from "./auth/LoginForm.js";
 import { RegisterForm } from "./auth/RegisterForm.js";
 import { NavBar } from "./nav/NavBar.js";
-import { populateToppings, renderToppings } from "./nav/NavBar.js";
+// import {  renderToppings } from "./nav/NavBar.js";
 import { SnackList } from "./snacks/SnackList.js";
 import { SnackDetails } from "./snacks/SnackDetails.js";
 import { Footer } from "./nav/Footer.js";
+import {TypeEdit} from "./snacks/TypeEdit.js"
 import {
 	logoutUser, setLoggedInUser, loginUser, registerUser, getLoggedInUser,
-	getSnacks, getSingleSnack, getToppings, getSnackToppings, useSnackToppingsCollection,getSnackSelection
+	getSnacks, getSingleSnack, getToppings, getSnackToppings, useSnackToppingsCollection,getSnackSelection, createType 
 } from "./data/apiManager.js";
 
 
@@ -110,6 +111,7 @@ applicationElement.addEventListener("change", event => {
 	
 		event.preventDefault()
 		if (event.target.id === "dropdown"){
+			
 		let toppingValue = event.target.value
 		getSnackSelection(toppingValue)
 		
@@ -163,11 +165,9 @@ const showLoginRegister = () => {
 }
 
 const showNavBar = () => {
-	const toppingList = useSnackToppingsCollection();
-	console.log(toppingList)
 	
 	applicationElement.innerHTML += NavBar();
-	renderToppings(toppingList);
+	
 }
 
 const showSnackList = () => {
@@ -176,6 +176,50 @@ const showSnackList = () => {
 		listElement.innerHTML = SnackList(allSnacks);
 	})
 }
+
+
+// working on Type Button
+const showTypeEdit = () => {
+    applicationElement.innerHTML = `${TypeEdit()}`
+}
+
+
+applicationElement.addEventListener("click", event => {
+    if(event.target.id === "addTypeBtn"){
+        applicationElement.innerHTML = ""
+        showNavBar();
+		showTypeEdit();
+        
+        
+    }
+})
+
+
+
+applicationElement.addEventListener("click", event => {
+    if(event.target.id === "submitType"){
+        const typeObj = {
+		
+        name : document.querySelector(".newType").value
+        }
+        createType(typeObj)
+        startLDSnacks();
+    }
+})
+
+const cancel = () => {
+    const cancelElement = documet.querySelector(".addType")
+    cancelElement.innerHTML = startLDSnacks();
+}
+
+applicationElement.addEventListener("click", event => {
+    if(event.target.id === "cancelType"){
+        cancel();
+        
+    }
+})
+
+
 // toppings drop down 
 // const showToppingsList = () => {
 // 	getSnackToppings().then(allToppings =>{
@@ -189,15 +233,17 @@ const showFooter = () => {
 }
 
 const startLDSnacks = () => {
-	applicationElement.innerHTML = "";
-	showNavBar()
-	applicationElement.innerHTML += `<div id="mainContent"></div>`;
-	showSnackList();
-	showFooter();
-	populateToppings();
+	getSnackToppings()
+	.then(() => {
+		applicationElement.innerHTML = "";
+		showNavBar();
+		applicationElement.innerHTML += `<div id="mainContent"></div>`;
+		showSnackList();
+		showFooter();
+	})
+	
+	
 	
 }
 
 checkForUser();
-// toppingsListener();
-// populateToppings();
