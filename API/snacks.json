@@ -143,8 +143,7 @@
       "seasonId": 1,
       "description": "Crispy, crunchy oatmeal puffs with an irresistible crème-flavored coating deliver a decadent experience in every spoonful.",
       "toppings": "Milk"
-     }
-    
+    }
   ],
   "toppings": [
     {
@@ -414,6 +413,10 @@
     {
       "id": 5,
       "name": "Cordial"
+    },
+    {
+      "name": "Candy Bar",
+      "id": 6
     }
   ],
   "shapes": [

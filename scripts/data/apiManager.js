@@ -117,3 +117,18 @@ export const getSnackSelection = (toppingId) => {
 }
 
 
+
+export const createType = (typeObj) => {
+	return fetch("http://localhost:8088/types", {
+	  method: "POST",
+	  headers: {
+		"Content-Type": "application/json"
+	  },
+	  body: JSON.stringify(typeObj)
+  
+	})
+	  .then(response => response.json())
+	  
+  }
+
+
